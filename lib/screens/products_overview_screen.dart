@@ -27,6 +27,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
         actions: <Widget>[
           PopupMenuButton(
             onSelected: (FilterOptions selectedValue) {
+              // setStateで状態を保存.
               setState(() {
                 if (selectedValue == FilterOptions.Favorites) {
                   _showOnlyFavorites = true;

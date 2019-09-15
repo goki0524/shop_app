@@ -12,6 +12,7 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Providerで全体の状態を管理.MultiProviderは複数記述できる
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(

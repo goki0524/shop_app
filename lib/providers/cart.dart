@@ -59,6 +59,12 @@ class Cart with ChangeNotifier {
               ));
     }
 
+    // 値が変更したことをProviderに伝える
+    notifyListeners();
+  }
+
+  void removeItem(String productId) {
+    _items.remove(productId);
     notifyListeners();
   }
 

@@ -15,7 +15,9 @@ class ProductItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
         child: GestureDetector(
+          // ジェスチャーを検出するウィジェット.ここではタップを検出
           onTap: () {
+            // ルーティング.パラメーターにidを渡す
             Navigator.of(context).pushNamed(
               ProductDetailScreen.routeName,
               arguments: product.id,

@@ -27,7 +27,7 @@ class CartScreen extends StatelessWidget {
                     'Total',
                     style: TextStyle(fontSize: 20),
                   ),
-                  Spacer(),
+                  Spacer(), // スペースをあける
                   Chip(
                     label: Text(
                       '\$${cart.totalAmount}',
@@ -48,10 +48,12 @@ class CartScreen extends StatelessWidget {
           ),
           SizedBox(height: 10),
           Expanded(
+            // 空白を埋めるようにウィジェットを配置
             child: ListView.builder(
-              itemCount: cart.items.length, // cart.itemCount
+              itemCount: cart.items.length, // cart.itemCountと何が違うの?
               itemBuilder: (ctx, i) => CartItem(
                 id: cart.items.values.toList()[i].id,
+                productId: cart.items.keys.toList()[i],
                 title: cart.items.values.toList()[i].title,
                 price: cart.items.values.toList()[i].price,
                 quantity: cart.items.values.toList()[i].quantity,
