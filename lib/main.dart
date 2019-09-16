@@ -9,6 +9,15 @@ import './providers/cart.dart';
 import './providers/orders.dart';
 import './screens/orders_screen.dart';
 import './screens/user_products_screen.dart';
+import './screens/edit_product_screen.dart';
+
+// Widget (Local) State
+// Affects only a widget on its own (does not affect other widgets)
+// "Should a loading spinner be displayed?", From Input, Validation...etc
+
+// App-wide State
+// Affects entire app or significant parts of the app
+// Authentication("is the user authenticated?"), Loaded Products,...
 
 void main() => runApp(MyApp());
 
@@ -41,6 +50,7 @@ class MyApp extends StatelessWidget {
             CartScreen.routeName: (ctx) => CartScreen(),
             OrdersScreen.routeName: (ctx) => OrdersScreen(),
             UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
+            EditProductScreen.routeName: (ctx) => EditProductScreen(),
           }),
     );
   }
