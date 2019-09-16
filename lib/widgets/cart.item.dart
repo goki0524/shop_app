@@ -38,6 +38,24 @@ class CartItem extends StatelessWidget {
         ),
       ),
       direction: DismissDirection.endToStart, // 左スワイプ時のみ削除
+      confirmDismiss: (direction) {
+        // スワイプで削除する前に確認ダイアログを表示する
+        return showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: Text('Are you sure?'),
+            content: Text('Do you want to remove the item from the cart?'),
+            actions: <Widget>[
+              FlatButton(child: Text('No'), onPressed: () {
+                Navigator.of(ctx).pop(false);
+              },),
+              FlatButton(child: Text('Yes'), onPressed: () {
+                Navigator.of(ctx).pop(true);
+              },),
+            ],
+          ),
+        );
+      },
       onDismissed: (direction) {
         // removeItemを使用したいだけのため,listen: falseにする
         // cart_screenでCartの状態は監視しているためlistenは不要
