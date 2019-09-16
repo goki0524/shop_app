@@ -8,7 +8,16 @@ class EditProductScreen extends StatefulWidget {
 }
 
 class _EditProductScreenState extends State<EditProductScreen> {
-final _priceFocusNode = FocusNode();
+  final _priceFocusNode = FocusNode();
+  final _descriptionFocusNode = FocusNode();
+
+  // FocusNodeは画面を離れてもメモリ内に残るので,disposeで使用しているメモリを解放する必要がある.(メモリリークを起こす)
+  @override
+  void dispose() {
+    _priceFocusNode.dispose();
+    _descriptionFocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +45,15 @@ final _priceFocusNode = FocusNode();
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
                 focusNode: _priceFocusNode,
+                onFieldSubmitted: (_) {
+                  FocusScope.of(context).requestFocus(_descriptionFocusNode);
+                },
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Description'),
+                maxLines: 3,
+                keyboardType: TextInputType.multiline,
+                focusNode: _descriptionFocusNode,
               ),
             ],
           ),
