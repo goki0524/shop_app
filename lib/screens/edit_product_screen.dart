@@ -48,6 +48,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   void _saveForm() {
+    // バリデーション(Formの子のすべてのFormFieldのバリデーションを行う)
+    // エラーがなければtrueを返す
+    final isValid = _form.currentState.validate();
+    if (!isValid) {
+      return;
+    } 
+    // バリデーションが通ったら保存
     _form.currentState.save();
     print(_editedProduct.title);
     print(_editedProduct.description);
@@ -81,6 +88,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 onFieldSubmitted: (_) {
                   // キーボードの次へを押すとfocusNodeが指定されているフォームに飛ぶ
                   FocusScope.of(context).requestFocus(_priceFocusNode);
+                },
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please provide a value.';
+                  }
+                  return null;
                 },
                 onSaved: (value) {
                   _editedProduct = Product(
