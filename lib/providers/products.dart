@@ -55,9 +55,11 @@ class Products with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  void addProduct(Product product) {
+  // 非同期として実行. Future型にする
+  Future<void> addProduct(Product product) {
     const url = Env.productsUrl;
-    http
+    // 処理完了後,Future型返す => 呼び出し元で .then() でチェーンできる
+    return http
         .post(
       url,
       body: json.encode({
