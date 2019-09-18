@@ -91,7 +91,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
   }
 
-  void _saveForm() {
+  Future<void> _saveForm() async {
     // バリデーション(Formの子のすべてのFormFieldのバリデーションを行う)
     // エラーがなければtrueを返す
     final isValid = _form.currentState.validate();
@@ -114,11 +114,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
       // 前の画面に戻る
       Navigator.of(context).pop();
     } else {
-      // 新規の場合,ProviderでProductを追加
-      Provider.of<Products>(context, listen: false)
-          .addProduct(_editedProduct)
-          .catchError((error) {
-        return showDialog(
+      try {
+        // 新規の場合,ProviderでProductを追加
+        // Webサーバーに問い合わせするため,await
+        await Provider.of<Products>(context, listen: false)
+            .addProduct(_editedProduct);
+      } catch (error) {
+        // ユーザーからの確認ボタンを待つため,await
+        await showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
             title: Text(('An error occurred!')),
@@ -133,13 +136,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
             ],
           ),
         );
-      }).then((_) {
+      } finally {
+        // 処理の成功,失敗に関係なく処理したいため,finally
         setState(() {
           _isLoading = false;
         });
         // 前の画面に戻る
         Navigator.of(context).pop();
-      });
+      }
     }
 
     // 前の画面に戻る
