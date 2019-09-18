@@ -6,6 +6,7 @@ import '../widgets/products_grid.dart';
 import '../widgets/badge.dart';
 import '../providers/cart.dart';
 import './cart_screen.dart';
+import '../providers/products.dart';
 
 enum FilterOptions {
   Favorites,
@@ -18,7 +19,29 @@ class ProductsOverviewScreen extends StatefulWidget {
 }
 
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
-  bool _showOnlyFavorites = false;
+  var _showOnlyFavorites = false;
+  var _isInit = true;
+
+  @override
+  void initState() {
+    // Provider.of<Products>(context).fetchAndSetProducts(); // initStateではcontextが取得できないためエラーとなる.解決策は2つ
+
+    // 1)ゼロ遅延で解決できる.
+    // Future.delayed(Duration.zero).then((_){
+    //   Provider.of<Products>(context).fetchAndSetProducts();
+    // });
+    super.initState();
+  }
+
+  // 2)didChangeDependenciesで解決.複数回実行されるので,変数で制御する.
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      Provider.of<Products>(context).fetchAndSetProducts();
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {

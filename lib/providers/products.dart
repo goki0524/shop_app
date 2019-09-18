@@ -55,6 +55,16 @@ class Products with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
+  Future<void> fetchAndSetProducts() async {
+    const url = Env.productsUrl;
+    try {
+      final response = await http.get(url);
+      print(json.decode(response.body));
+    } catch (error) {
+      throw (error);
+    }
+  }
+
   // 非同期として実行. Future型にする
   Future<void> addProduct(Product product) async {
     const url = Env.productsUrl;

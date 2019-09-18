@@ -74,7 +74,7 @@ class CartItem extends StatelessWidget {
                 padding: EdgeInsets.all(5),
                 child: FittedBox(
                   // 文字をウィジェット内に収めるように圧縮
-                  child: Text('\$${price}'),
+                  child: Text('\$$price'),
                 ),
               ),
             ),
