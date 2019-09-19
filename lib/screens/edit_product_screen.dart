@@ -106,13 +106,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
     if (_editedProduct.id != null) {
       // 既存の商品の場合,ProviderでProductを更新
-      Provider.of<Products>(context, listen: false)
+      await Provider.of<Products>(context, listen: false)
           .updateProduct(_editedProduct.id, _editedProduct);
-      setState(() {
-        _isLoading = false;
-      });
-      // 前の画面に戻る
-      Navigator.of(context).pop();
     } else {
       try {
         // 新規の場合,ProviderでProductを追加
@@ -136,15 +131,21 @@ class _EditProductScreenState extends State<EditProductScreen> {
             ],
           ),
         );
-      } finally {
-        // 処理の成功,失敗に関係なく処理したいため,finally
-        setState(() {
-          _isLoading = false;
-        });
-        // 前の画面に戻る
-        Navigator.of(context).pop();
       }
+      // finally {
+      //   // 処理の成功,失敗に関係なく処理したいため,finally
+      //   setState(() {
+      //     _isLoading = false;
+      //   });
+      //   // 前の画面に戻る
+      //   Navigator.of(context).pop();
+      // }
     }
+    setState(() {
+      _isLoading = false;
+    });
+    // 前の画面に戻る
+    Navigator.of(context).pop();
 
     // 前の画面に戻る
     // Navigator.of(context).pop();

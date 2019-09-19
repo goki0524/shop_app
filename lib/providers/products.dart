@@ -8,6 +8,8 @@ import './product.dart';
 import '../config/env.dart';
 
 class Products with ChangeNotifier {
+  final env = Env();
+
   List<Product> _items = [
     // Product(
     //   id: 'p1',
@@ -56,7 +58,7 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchAndSetProducts() async {
-    const url = Env.productsUrl;
+    final url = env.getProductsUrl;
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -80,7 +82,7 @@ class Products with ChangeNotifier {
 
   // 非同期として実行. Future型にする
   Future<void> addProduct(Product product) async {
-    const url = Env.productsUrl;
+    final url = env.getProductsUrl;
     try {
       final response = await http.post(
         url,
@@ -110,9 +112,17 @@ class Products with ChangeNotifier {
     }
   }
 
-  void updateProduct(String id, Product newProduct) {
+  Future<void> updateProduct(String id, Product newProduct) async {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
+      final url = env.getProductsUrlId(id);
+      await http.patch(url,
+          body: json.encode({
+            'title': newProduct.title,
+            'description': newProduct.description,
+            'imageUrl': newProduct.imageUrl,
+            'price': newProduct.price,
+          }));
       _items[prodIndex] = newProduct;
       notifyListeners();
     } else {
