@@ -155,7 +155,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Product'),
+        title: Text('商品を編集する'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.save),
@@ -178,7 +178,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   children: <Widget>[
                     TextFormField(
                       initialValue: _initValues['title'],
-                      decoration: InputDecoration(labelText: 'Title'),
+                      decoration: InputDecoration(labelText: 'タイトル'),
                       textInputAction: TextInputAction.next,
                       onFieldSubmitted: (_) {
                         // キーボードの次へを押すとfocusNodeが指定されているフォームに飛ぶ
@@ -186,7 +186,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       },
                       validator: (value) {
                         if (value.isEmpty) {
-                          return 'Please provide a value.';
+                          return '値を入力してください。';
                         }
                         return null;
                       },
@@ -203,7 +203,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     ),
                     TextFormField(
                       initialValue: _initValues['price'],
-                      decoration: InputDecoration(labelText: 'Price'),
+                      decoration: InputDecoration(labelText: '値段'),
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.number,
                       focusNode: _priceFocusNode,
@@ -213,13 +213,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       },
                       validator: (value) {
                         if (value.isEmpty) {
-                          return 'Please enter a price.';
+                          return '値段を入力してください。';
                         }
                         if (double.tryParse(value) == null) {
-                          return 'Please enter a valid number.';
+                          return '数値を入力してください。';
                         }
                         if (double.parse(value) <= 0) {
-                          return 'Please enter a number greater then zero.';
+                          return '0以上の数値を入力してください。';
                         }
                         return null;
                       },
@@ -236,16 +236,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     ),
                     TextFormField(
                       initialValue: _initValues['description'],
-                      decoration: InputDecoration(labelText: 'Description'),
+                      decoration: InputDecoration(labelText: '商品説明'),
                       maxLines: 3,
                       keyboardType: TextInputType.multiline,
                       focusNode: _descriptionFocusNode,
                       validator: (value) {
                         if (value.isEmpty) {
-                          return 'Please enter a description.';
+                          return '商品説明を入力してください。';
                         }
                         if (value.length < 10) {
-                          return 'Should be at least 10 characters long.';
+                          return '10文字以上入力してください。';
                         }
                         return null;
                       },
@@ -271,7 +271,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             border: Border.all(width: 1, color: Colors.grey),
                           ),
                           child: _imageUrlController.text.isEmpty
-                              ? Text('Enter a URL')
+                              ? Text('画像URLを入力')
                               : FittedBox(
                                   child: Image.network(
                                     _imageUrlController.text,
@@ -281,7 +281,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         ),
                         Expanded(
                           child: TextFormField(
-                            decoration: InputDecoration(labelText: 'Image URL'),
+                            decoration: InputDecoration(labelText: '画像URL'),
                             keyboardType: TextInputType.url,
                             textInputAction: TextInputAction.done,
                             controller: _imageUrlController,
@@ -291,16 +291,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             },
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Please enter an image URL.';
+                                return '画像URLを入力してください。';
                               }
                               if (!value.startsWith('http') &&
                                   !value.startsWith('https')) {
-                                return 'Please enter a valid URL';
+                                return '有効なURLを入力してください。';
                               }
                               if (!value.endsWith('.png') &&
                                   !value.endsWith('.jpg') &&
                                   !value.endsWith('.jpeg')) {
-                                return 'Please enter a valid image URL.';
+                                return '有効な画像URLを入力してください。';
                               }
                               return null;
                             },

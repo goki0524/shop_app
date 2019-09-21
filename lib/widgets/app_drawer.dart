@@ -10,13 +10,13 @@ class AppDrawer extends StatelessWidget {
       child: Column(
         children: <Widget>[
           AppBar(
-            title: Text('Hello Friend!'),
+            title: Text('OneTapShop'),
             automaticallyImplyLeading: false, // 戻るボタンを表示しない
           ),
           Divider(), // 水平線
           ListTile(
             leading: Icon(Icons.shop),
-            title: Text('Shop'),
+            title: Text('ショップ'),
             onTap: () {
               Navigator.of(context).pushReplacementNamed('/');
             },
@@ -24,7 +24,7 @@ class AppDrawer extends StatelessWidget {
           Divider(), // 水平線
           ListTile(
             leading: Icon(Icons.payment),
-            title: Text('Orders'),
+            title: Text('注文履歴'),
             onTap: () {
               Navigator.of(context)
                   .pushReplacementNamed(OrdersScreen.routeName);
@@ -33,7 +33,7 @@ class AppDrawer extends StatelessWidget {
           Divider(), // 水平線
           ListTile(
             leading: Icon(Icons.edit),
-            title: Text('Manage Products'),
+            title: Text('商品を出品'),
             onTap: () {
               Navigator.of(context)
                   .pushReplacementNamed(UserProductsScreen.routeName);

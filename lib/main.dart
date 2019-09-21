@@ -38,9 +38,9 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-          title: 'MyShop',
+          title: 'OneTapShop',
           theme: ThemeData(
-            primarySwatch: Colors.purple,
+            primarySwatch: Colors.teal,
             accentColor: Colors.deepOrange,
             fontFamily: 'Lato',
           ),

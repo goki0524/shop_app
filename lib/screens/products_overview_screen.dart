@@ -55,7 +55,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('MyShop'),
+        title: Text('OneTapShop'),
         actions: <Widget>[
           PopupMenuButton(
             onSelected: (FilterOptions selectedValue) {
@@ -71,11 +71,11 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
             icon: Icon(Icons.more_vert),
             itemBuilder: (_) => [
               PopupMenuItem(
-                child: Text('Only Favorites'),
+                child: Text('お気に入りを表示'),
                 value: FilterOptions.Favorites,
               ),
               PopupMenuItem(
-                child: Text('Show All'),
+                child: Text('すべて表示'),
                 value: FilterOptions.All,
               ),
             ],

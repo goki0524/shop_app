@@ -14,7 +14,7 @@ class OrdersScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your Orders'),
+        title: Text('注文履歴'),
       ),
       drawer: AppDrawer(),
       body: ListView.builder(

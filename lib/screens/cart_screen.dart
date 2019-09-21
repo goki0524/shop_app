@@ -13,7 +13,7 @@ class CartScreen extends StatelessWidget {
     final cart = Provider.of<Cart>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your Cart'),
+        title: Text('ショッピングカート'),
       ),
       body: Column(
         children: <Widget>[
@@ -25,13 +25,13 @@ class CartScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    'Total',
+                    '合計',
                     style: TextStyle(fontSize: 20),
                   ),
                   Spacer(), // スペースをあける
                   Chip(
                     label: Text(
-                      '\$${cart.totalAmount.toStringAsFixed(2)}',
+                      '¥${cart.totalAmount.toStringAsFixed(2)}',
                       style: TextStyle(
                         color: Theme.of(context).primaryTextTheme.title.color,
                       ),
@@ -39,7 +39,7 @@ class CartScreen extends StatelessWidget {
                     backgroundColor: Theme.of(context).primaryColor,
                   ),
                   FlatButton(
-                    child: Text('ORDER NOW'),
+                    child: Text('注文する'),
                     onPressed: () {
                       Provider.of<Orders>(context, listen: false).addOrder(
                         cart.items.values.toList(),

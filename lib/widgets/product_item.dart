@@ -55,11 +55,11 @@ class ProductItem extends StatelessWidget {
                 // 下部に通知バーを表示する
                 SnackBar(
                   content: Text(
-                    'Added item to cart!',
+                    'カートに商品を追加しました!',
                   ),
                   duration: Duration(seconds: 2),
                   action: SnackBarAction(
-                    label: 'UNDO',
+                    label: '戻す',
                     onPressed: () {
                       cart.removeSingleItme(product.id);
                     },

@@ -13,6 +13,8 @@ class UserProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 非同期処理内ではcontextを取得できないので,あらかじめ変数に格納しておく
+    final scaffold = Scaffold.of(context);
     return ListTile(
       title: Text(title),
       // CircleAvatar.backgroundImageはImageProvider型なのでNetworkImageを使用する. fitを使用しなくてもリサイズしてくれる
@@ -26,14 +28,27 @@ class UserProductItem extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.edit),
               onPressed: () {
-                Navigator.of(context).pushNamed(EditProductScreen.routeName, arguments: id);
+                Navigator.of(context)
+                    .pushNamed(EditProductScreen.routeName, arguments: id);
               },
               color: Theme.of(context).primaryColor,
             ),
             IconButton(
               icon: Icon(Icons.delete),
-              onPressed: () {
-                Provider.of<Products>(context, listen: false).deleteProduct(id);
+              onPressed: () async {
+                try {
+                  await Provider.of<Products>(context, listen: false)
+                      .deleteProduct(id);
+                } catch (error) {
+                  scaffold.showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        '削除に失敗しました。',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  );
+                }
               },
               color: Theme.of(context).errorColor,
             ),
