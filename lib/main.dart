@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.teal,
             accentColor: Colors.deepOrange,
-            fontFamily: 'Lato',
+            fontFamily: 'MPLUSRounded1c',
           ),
           home: ProductsOverviewScreen(),
           routes: {

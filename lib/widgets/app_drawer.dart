@@ -33,7 +33,7 @@ class AppDrawer extends StatelessWidget {
           Divider(), // 水平線
           ListTile(
             leading: Icon(Icons.edit),
-            title: Text('商品を出品'),
+            title: Text('商品出品管理'),
             onTap: () {
               Navigator.of(context)
                   .pushReplacementNamed(UserProductsScreen.routeName);
