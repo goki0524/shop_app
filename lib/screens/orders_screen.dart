@@ -17,10 +17,12 @@ class OrdersScreen extends StatelessWidget {
       ),
       drawer: AppDrawer(),
       body: FutureBuilder(
-        // lesson 251
+        // FutureBuilder: lesson 251
+        // future:非同期処理(fetch), builder:dataSnapshot(取得データ)
         future: Provider.of<Orders>(context, listen: false).fetchAndSetOrders(),
         builder: (ctx, dataSnapshot) {
           if (dataSnapshot.connectionState == ConnectionState.waiting) {
+            // データの取得中ならばスピナー(ローディング画面)表示
             return Center(child: CircularProgressIndicator());
           } else {
             if (dataSnapshot.error != null) {
@@ -28,6 +30,7 @@ class OrdersScreen extends StatelessWidget {
                 child: Text('An error occurred!'),
               );
             } else {
+              // エラーがなければConsumerでこの部分のみ更新
               return Consumer<Orders>(
                 builder: (ctx, orderData, child) => ListView.builder(
                   itemCount: orderData.orders.length,

@@ -10,6 +10,7 @@ import './providers/orders.dart';
 import './screens/orders_screen.dart';
 import './screens/user_products_screen.dart';
 import './screens/edit_product_screen.dart';
+import './screens/auth-screen.dart';
 
 // Widget (Local) State
 // Affects only a widget on its own (does not affect other widgets)
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.deepOrange,
             fontFamily: 'MPLUSRounded1c',
           ),
-          home: ProductsOverviewScreen(),
+          home: AuthScreen(),
           routes: {
             ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
             CartScreen.routeName: (ctx) => CartScreen(),
