@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:shop_app/config/env.dart';
+import '../config/env.dart';
 
 class Product with ChangeNotifier {
+  final env = Env();
+  
   final String id;
   final String title;
   final String description;
@@ -27,12 +29,11 @@ class Product with ChangeNotifier {
   }
 
   Future<void> toggleFavoriteStatus() async {
-    final env = Env();
     final oldStatus = isFavorite;
     isFavorite = !isFavorite;
     notifyListeners();
 
-    final url = env.getProductsUrlId(id);
+    final url = env.productsUrlId(id);
     try {
       final response = await http.patch(
         url,

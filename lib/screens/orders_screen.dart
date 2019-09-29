@@ -27,7 +27,7 @@ class OrdersScreen extends StatelessWidget {
           } else {
             if (dataSnapshot.error != null) {
               return Center(
-                child: Text('An error occurred!'),
+                child: Text('エラーが発生しました。'),
               );
             } else {
               // エラーがなければConsumerでこの部分のみ更新

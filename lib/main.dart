@@ -42,21 +42,25 @@ class MyApp extends StatelessWidget {
           value: Orders(),
         ),
       ],
-      child: MaterialApp(
+      // lesson: 261 認証による初期画面の切り替え Consumer<Auth>
+      child: Consumer<Auth>(
+        builder: (ctx, auth, _) => MaterialApp(
           title: 'OneTapShop',
           theme: ThemeData(
             primarySwatch: Colors.teal,
             accentColor: Colors.deepOrange,
             fontFamily: 'MPLUSRounded1c',
           ),
-          home: AuthScreen(),
+          home: auth.isAuth ? ProductsOverviewScreen() : AuthScreen(),
           routes: {
             ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
             CartScreen.routeName: (ctx) => CartScreen(),
             OrdersScreen.routeName: (ctx) => OrdersScreen(),
             UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
             EditProductScreen.routeName: (ctx) => EditProductScreen(),
-          }),
+          },
+        ),
+      ),
     );
   }
 }
