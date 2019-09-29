@@ -22,15 +22,17 @@ class OrderItem {
 
 class Orders with ChangeNotifier {
   final env = Env();
-
+  final String authToken;
   List<OrderItem> _orders = [];
+
+  Orders(this.authToken, this._orders);
 
   List<OrderItem> get orders {
     return [..._orders];
   }
 
   Future<void> fetchAndSetOrders() async {
-    final url = env.ordersUrl;
+    final url = env.ordersUrl(authToken);
     final response = await http.get(url);
     final List<OrderItem> loadedOrders = [];
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -61,7 +63,7 @@ class Orders with ChangeNotifier {
   }
 
   Future<void> addOrder(List<CartItem> cartProducts, double total) async {
-    final url = env.ordersUrl;
+    final url = env.ordersUrl(authToken);
     // timestampは一度変数に格納して使用する(同じ値にするため)
     final timestamp = DateTime.now();
     final response = await http.post(

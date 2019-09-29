@@ -32,17 +32,26 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Auth(),
         ),
-        ChangeNotifierProvider.value(
-          value: Products(),
+        // lesson 263: Authの状態を検知してProductsを更新させる.
+        // またAuthオブジェクトを受け取れる(ChangeNotifierProxyProvider)
+        ChangeNotifierProxyProvider<Auth, Products>(
+          builder: (ctx, auth, previousProducts) => Products(
+            auth.token,
+            previousProducts == null ? [] : previousProducts.items,
+          ),
         ),
         ChangeNotifierProvider.value(
           value: Cart(),
         ),
-        ChangeNotifierProvider.value(
-          value: Orders(),
+        ChangeNotifierProxyProvider<Auth, Orders>(
+          builder: (ctx, auth, previousOrders) => Orders(
+            auth.token,
+            previousOrders == null ? [] : previousOrders.orders,
+          ),
         ),
       ],
-      // lesson: 261 認証による初期画面の切り替え Consumer<Auth>
+      // lesson: 261 認証による初期画面の切り替え(未認証:認証画面, 認証済:商品ページ)
+      // Consumer<Auth>によりAuthオブジェクトの状態を検知して,MaterialAppを再構築する
       child: Consumer<Auth>(
         builder: (ctx, auth, _) => MaterialApp(
           title: 'OneTapShop',

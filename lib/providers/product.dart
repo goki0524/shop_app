@@ -28,12 +28,12 @@ class Product with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> toggleFavoriteStatus() async {
+  Future<void> toggleFavoriteStatus(String authToken) async {
     final oldStatus = isFavorite;
     isFavorite = !isFavorite;
     notifyListeners();
 
-    final url = env.productsUrlId(id);
+    final url = env.productsUrlId(authToken, id);
     try {
       final response = await http.patch(
         url,
