@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/auth.dart';
+import '../models/http_exception.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -106,6 +107,24 @@ class _AuthCardState extends State<AuthCard> {
   var _isLoading = false;
   final _passwordController = TextEditingController();
 
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('エラーが発生しました。'),
+        content: Text(message),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('OK'),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   Future<void> _submit() async {
     if (!_formKey.currentState.validate()) {
       // Invalid!
@@ -115,17 +134,37 @@ class _AuthCardState extends State<AuthCard> {
     setState(() {
       _isLoading = true;
     });
-    if (_authMode == AuthMode.Login) {
-      await Provider.of<Auth>(context, listen: false).login(
-        _authData['email'],
-        _authData['password'],
-      );
-    } else {
-      await Provider.of<Auth>(context, listen: false).signup(
-        _authData['email'],
-        _authData['password'],
-      );
+    try {
+      if (_authMode == AuthMode.Login) {
+        await Provider.of<Auth>(context, listen: false).login(
+          _authData['email'],
+          _authData['password'],
+        );
+      } else {
+        await Provider.of<Auth>(context, listen: false).signup(
+          _authData['email'],
+          _authData['password'],
+        );
+      }
+    } on HttpException catch (error) {
+      var errorMessage = '認証に失敗しました。';
+      if (error.toString().contains('EMAIL_EXISTS')) {
+        errorMessage = 'このメールアドレスはすでに使われています。';
+      } else if (error.toString().contains('INVALID_EMAIL')) {
+        errorMessage = 'メールアドレスが有効ではありません。';
+      } else if (error.toString().contains('WEAK_PASSWORD')) {
+        errorMessage = 'パスワードの強度が弱すぎます。';
+      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
+        errorMessage = 'メールアドレスが見つかりませんでした。';
+      } else if (error.toString().contains('INVALID_PASSWORD')) {
+        errorMessage = 'パスワードが有効ではありません。';
+      }
+      _showErrorDialog(errorMessage);
+    } catch (error) {
+      const errorMessage = '認証できませんでした。もう一度やり直してください。';
+      _showErrorDialog(errorMessage);
     }
+
     setState(() {
       _isLoading = false;
     });
